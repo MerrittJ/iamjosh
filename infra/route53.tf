@@ -2,6 +2,18 @@ resource "aws_route53_zone" "iamjosh_zone" {
   name = var.domain_name
 }
 
+resource "aws_route53_zone" "blog_iamjosh_zone" {
+  name = "blog.${var.domain_name}"
+}
+
+resource "aws_route53_record" "blog-ns" {
+  zone_id = aws_route53_zone.iamjosh_zone.zone_id
+  name    = "blog.${var.domain_name}"
+  type    = "NS"
+  ttl     = "30"
+  records = aws_route53_zone.blog_iamjosh_zone.name_servers
+}
+
 resource "aws_acm_certificate" "iamjosh_certificate_request" {
   domain_name       = var.domain_name
   validation_method = "DNS"

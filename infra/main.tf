@@ -14,8 +14,6 @@ provider "aws" {
 }
 
 
-
-
 resource "aws_cloudfront_distribution" "iamjosh_cf" {
   origin {
     domain_name = aws_s3_bucket_website_configuration.iamjosh_static_config.website_endpoint
